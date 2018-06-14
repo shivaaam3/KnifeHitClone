@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 114337084424687450}
   - component: {fileID: 61228578217860490}
   m_Layer: 0
-  m_Name: Knife
-  m_TagString: Knife
+  m_Name: KnifeHit
+  m_TagString: HitKnife
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1499669786686208}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1d0aa69db39fb48bda8cf08d198e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnitude: 1500
+  magnitude: 0
 --- !u!212 &212558166042123050
 SpriteRenderer:
   m_ObjectHideFlags: 1

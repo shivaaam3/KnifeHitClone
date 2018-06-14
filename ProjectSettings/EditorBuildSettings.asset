@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_KnifeHit/Scenes/GameScene.unity
+    guid: ad39dbf1cf1ce6443a480c5311dd1f3d

@@ -9,17 +9,12 @@ public class WoodLogController : MonoBehaviour {
 	[SerializeField] private float speed = 0;
 	[SerializeField] private int direction = 1;
 	[SerializeField] private int knivesToClearLevel = 0;
-	[SerializeField] private int knivesHit = 0;
 
 	public int KnivesToClearLevel
 	{
 		get{return knivesToClearLevel;}
 	}
 
-	public int KnivesHit
-	{
-		get{return knivesHit;}
-	}
 		
 	// Use this for initialization
 	void Start () {
@@ -34,29 +29,7 @@ public class WoodLogController : MonoBehaviour {
 			transform.Rotate(0,0,speed*direction*Time.deltaTime);
 		}
 	}
-
-	void OnTriggerEnter2D(Collider2D coll)
-	{
-		if(coll.tag == "Knife")
-		{
-			coll.tag = "HitKnife";
-			coll.transform.parent = transform;
-			coll.attachedRigidbody.velocity = Vector2.zero;
-			coll.attachedRigidbody.freezeRotation = true;
-			coll.attachedRigidbody.isKinematic = true;
-
-			GetComponent<Animator>().Play("LogShake");
-
-			++knivesHit;
-			GameManager.instance.uimanager.UpdateScore(++GameManager.instance.score);
-			Debug.Log("Hit!!");
-
-			if(KnivesHit == KnivesToClearLevel)
-			{
-				GameManager.instance.LevelCleared();
-			}
-		}
-	}
+		
 
 	private void StartMotion()
 	{

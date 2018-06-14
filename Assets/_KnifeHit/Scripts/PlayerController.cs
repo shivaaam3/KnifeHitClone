@@ -7,8 +7,9 @@ using System;
 public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private GameObject knife;
-	[SerializeField]private int knivesLimit = 0;
 	private int knivesThrown = 0;
+	public int knivesLimit = 0;
+	public int knivesHit = 0;
 
 	void OnEnable()
 	{
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				Instantiate(knife,transform.position,knife.transform.rotation);
 				knivesThrown++;
+				GameManager.instance.uimanager.UpdateKnives(knivesLimit - knivesThrown);
 			}
 		}
 	}
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 	private void ResetVariables()
 	{
 		knivesThrown = 0;
-		knivesLimit = GameObject.FindObjectOfType<WoodLogController>().KnivesToClearLevel;
+		knivesHit = 0;
+		knivesLimit = GameManager.instance.woodLogController.KnivesToClearLevel;
+		GameManager.instance.uimanager.UpdateKnives(knivesLimit);
 	}
 }

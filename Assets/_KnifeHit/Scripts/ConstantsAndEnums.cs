@@ -34,5 +34,15 @@ class Strings
 		"Level10"
 	};
 	#endregion
+
+	#region Tags
+	public static string APPLE = "Apple";
+	public static string LOG = "Log";
+	public static string KNIFE = "Knife";
+	public static string HIT_KNIFE = "HitKnife";
+
+	#endregion
+	public static string BOSS_LEVEL = "Boss Level!";
+
 }
 #endregion

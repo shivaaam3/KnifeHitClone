@@ -5,7 +5,7 @@ using UnityEngine;
 public class PrefsManager {
 
 	private const string HIGH_SCORE = "highscore";
-
+	private const string APPLES = "apples";
 
 	#region Properties
 
@@ -15,5 +15,10 @@ public class PrefsManager {
 		get{return PlayerPrefs.GetInt(HIGH_SCORE);}
 	}
 
+	public static int Apples
+	{
+		set{PlayerPrefs.SetInt(APPLES,value);}
+		get{return PlayerPrefs.GetInt(APPLES);}
+	}
 	#endregion
 }

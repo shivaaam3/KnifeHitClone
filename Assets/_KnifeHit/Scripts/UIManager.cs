@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour {
 	[SerializeField] GameObject GameOverPanel;
 	[SerializeField] float delay;
 	public Text scoreText;
+	public Text appleText;
+	public Text knivesText;
+	public Text levelText;
 	public Text gameOverScoreText;
 
 	void OnEnable()
@@ -40,5 +43,15 @@ public class UIManager : MonoBehaviour {
 	public void UpdateScore(int score)
 	{
 		scoreText.text = "SCORE: " + score.ToString();
+	}
+
+	public void UpdateApples(int apples)
+	{
+		appleText.text = "APPLES: " + apples.ToString();
+	}
+
+	public void UpdateKnives(int knives)
+	{
+		knivesText.text = "KNIVES: " + knives.ToString();
 	}
 }
