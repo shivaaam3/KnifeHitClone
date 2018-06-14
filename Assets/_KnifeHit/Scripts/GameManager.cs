@@ -7,18 +7,22 @@ public class GameManager : MonoBehaviour {
 
 	[SerializeField] private GameStates currentState;
 	[SerializeField] private int currentLevelNumber = 0;
+
 	private GameObject currentLevel;
+
 	public static GameManager instance = null;
 	public static Action gameOver, gamePlay, levelCleared;
+	public int score = 0;
+
+	#region Other scripts references
+	public UIManager uimanager;
+	#endregion
+
 	public GameStates CurrentState
 	{
 		get {return currentState;}
 	}
 
-	private WoodLogController woodLogController
-	{
-		get{return GameObject.FindObjectOfType<WoodLogController>();}
-	}
 	void Awake()
 	{
 		if(instance == null)
@@ -41,10 +45,9 @@ public class GameManager : MonoBehaviour {
 	{
 		currentState = GameStates.Play;
 		currentLevelNumber = 0;
+		score = 0;
+		uimanager.UpdateScore(GameManager.instance.score);
 		currentLevel = Instantiate(Resources.Load(Strings.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
-		Debug.Log("1 " + currentLevel);
-
-		gamePlay();
 		levelCleared();
 	}
 
@@ -57,6 +60,14 @@ public class GameManager : MonoBehaviour {
 	{
 		currentState = GameStates.Over;
 		gameOver();
+
+		Destroy(currentLevel);
+
+		if(score>=PrefsManager.HighScore)
+		{
+			PrefsManager.HighScore = score;
+		}
+		Debug.Log("Score: " + score +" "+ "HighScore: " + PrefsManager.HighScore);
 	}
 
 	public void LevelCleared()
@@ -68,7 +79,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		GameObject oldLevel = currentLevel;
-		Destroy(currentLevel);
+		Destroy(oldLevel);
 		currentLevel = Instantiate(Resources.Load(Strings.LEVEL_NUMBER[++currentLevelNumber], typeof(GameObject))) as GameObject;
 		levelCleared();
 	}

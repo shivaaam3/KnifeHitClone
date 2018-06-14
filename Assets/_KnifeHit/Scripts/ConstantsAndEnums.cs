@@ -16,9 +16,10 @@ public enum MovementType
 }
 #endregion
 
-#region Level Names
+#region Constant strings
 class Strings
 {
+	#region Level names
 	public static string[] LEVEL_NUMBER = new string[] 
 	{
 		"Level1",
@@ -32,6 +33,6 @@ class Strings
 		"Level9",
 		"Level10"
 	};
-	
+	#endregion
 }
 #endregion

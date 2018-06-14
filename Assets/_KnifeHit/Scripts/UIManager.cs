@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
 	[SerializeField] GameObject GameOverPanel;
 	[SerializeField] float delay;
+	public Text scoreText;
+	public Text gameOverScoreText;
+
 	void OnEnable()
 	{
 		GameManager.gameOver += ShowGameOverPanel;	
@@ -28,7 +32,13 @@ public class UIManager : MonoBehaviour {
 
 	IEnumerator GameOver()
 	{
+		gameOverScoreText.text = "SCORE: " + GameManager.instance.score +"\n"+"HIGHSCORE: " + PrefsManager.HighScore;
 		yield return new WaitForSeconds(delay);
 		GameOverPanel.SetActive(true);
+	}
+
+	public void UpdateScore(int score)
+	{
+		scoreText.text = "SCORE: " + score.ToString();
 	}
 }

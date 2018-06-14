@@ -87,10 +87,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMovmentType: 0
-  maxSpeed: 300
-  speed: 150
+  maxSpeed: 200
+  speed: 0
   direction: 1
-  knivesToClearLevel: 5
+  knivesToClearLevel: 10
   knivesHit: 0
 --- !u!212 &212094838337015796
 SpriteRenderer:

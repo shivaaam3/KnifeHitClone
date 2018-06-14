@@ -20,19 +20,11 @@ public class WoodLogController : MonoBehaviour {
 	{
 		get{return knivesHit;}
 	}
-
-	void OnEnable()
-	{
-		GameManager.gamePlay += StartMotion;	
-	}
-
-	void OnDisable()
-	{
-		GameManager.gamePlay -= StartMotion;	
-	}
+		
 	// Use this for initialization
 	void Start () {
 		GameManager.levelCleared();
+		StartMotion();
 	}
 	
 	// Update is called once per frame
@@ -56,6 +48,7 @@ public class WoodLogController : MonoBehaviour {
 			GetComponent<Animator>().Play("LogShake");
 
 			++knivesHit;
+			GameManager.instance.uimanager.UpdateScore(++GameManager.instance.score);
 			Debug.Log("Hit!!");
 
 			if(KnivesHit == KnivesToClearLevel)
