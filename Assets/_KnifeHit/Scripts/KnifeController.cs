@@ -5,7 +5,6 @@ using UnityEngine;
 public class KnifeController : MonoBehaviour {
 
 	[SerializeField] float magnitude;
-
 	// Use this for initialization
 	void Start () {
 
@@ -21,6 +20,8 @@ public class KnifeController : MonoBehaviour {
 			rb.velocity = new Vector2(rb.velocity.x, 0);
 			rb.AddForce(Vector2.down*magnitude);
 			Destroy(gameObject,1f);
+			Debug.Log("Game Over!!");
+			GameManager.instance.EndGame();
 		}
 	}
 }
