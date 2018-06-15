@@ -7,6 +7,8 @@ using System;
 public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private GameObject knife;
+	[SerializeField] private float reloadTimeInterval = 0;
+	private float reloadTime = 0;
 	private int knivesThrown = 0;
 	public int knivesLimit = 0;
 	public int knivesHit = 0;
@@ -30,11 +32,14 @@ public class PlayerController : MonoBehaviour {
 
 		if(GameManager.instance.CurrentState == GameStates.Play && Input.GetMouseButtonDown(0))
 		{
-			if(knivesThrown<knivesLimit)
+			if(Input.GetMouseButtonDown(0))
 			{
-				Instantiate(knife,transform.position,knife.transform.rotation);
-				knivesThrown++;
-				GameManager.instance.uimanager.UpdateKnives(knivesLimit - knivesThrown);
+				if(knivesThrown<knivesLimit  && Time.time>=reloadTime)
+				{
+					reloadTime = Time.time + reloadTimeInterval;
+					Instantiate(knife,transform.position,knife.transform.rotation);
+					++knivesThrown;
+				}
 			}
 		}
 	}

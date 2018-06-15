@@ -16,6 +16,14 @@ public enum MovementType
 }
 #endregion
 
+#region AudioClips
+public enum Sounds
+{
+	WoodCut,
+	KnifeClunk
+}
+#endregion
+
 #region Constant strings
 class Strings
 {
@@ -40,8 +48,8 @@ class Strings
 	public static string LOG = "Log";
 	public static string KNIFE = "Knife";
 	public static string HIT_KNIFE = "HitKnife";
-
 	#endregion
+
 	public static string BOSS_LEVEL = "Boss Level!";
 
 }

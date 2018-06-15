@@ -12,11 +12,12 @@ public class GameManager : MonoBehaviour {
 	private float levelDelay = 1.0f;
 
 	public static GameManager instance = null;
-	public static Action gameOver, gamePlay, levelCleared;
+	public static Action gameOver, levelCleared;
 	public int score = 0;
 
 	#region Other scripts references
 	public UIManager uimanager;
+	public AudioManager audioManager;
 	public PlayerController playerController;
 	public WoodLogController woodLogController;
 	#endregion
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour {
 		currentState = GameStates.Play;
 		currentLevelNumber = 0;
 		score = 0;
+
+		DestroyOldLevel();
 		currentLevel = Instantiate(Resources.Load(Strings.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
 		woodLogController = GameObject.FindObjectOfType<WoodLogController>();
 		levelCleared();
@@ -67,19 +70,23 @@ public class GameManager : MonoBehaviour {
 	{
 		currentState = GameStates.Over;
 
-		Destroy(currentLevel);
+		DestroyOldLevel();
 
 		if(score>=PrefsManager.HighScore)
 		{
 			PrefsManager.HighScore = score;
 		}
 		gameOver();
-		Debug.Log("Score: " + score +" "+ "HighScore: " + PrefsManager.HighScore);
 	}
 
 	public void LevelCleared()
 	{
+		if(CurrentState == GameStates.Over)
+			return;
+		
 		Debug.Log("Level Cleared");
+		PauseGame();
+		currentLevel.SetActive(false);
 		if(currentLevelNumber == Strings.LEVEL_NUMBER.Length-1)
 		{
 			Debug.Log("Game Completed!!");
@@ -88,8 +95,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		++currentLevelNumber;
-		GameObject oldLevel = currentLevel;
-		Destroy(oldLevel);
+
 
 		if(currentLevelNumber % 5 == 4)
 			uimanager.levelText.text = Strings.BOSS_LEVEL;
@@ -104,8 +110,19 @@ public class GameManager : MonoBehaviour {
 	IEnumerator StartNewLevel()
 	{
 		yield return new WaitForSeconds(levelDelay);
+		DestroyOldLevel();
+		currentState = GameStates.Play;
 		currentLevel = Instantiate(Resources.Load(Strings.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
 		woodLogController = GameObject.FindObjectOfType<WoodLogController>();
 		levelCleared();
+	}
+
+	private void DestroyOldLevel()
+	{
+		if(currentLevel != null)
+			Destroy(currentLevel);
+
+		else
+			Debug.Log("null level!");
 	}
 }

@@ -17,17 +17,20 @@ public class KnifeController : MonoBehaviour {
 	{
 		if(coll.tag == Strings.LOG && gameObject.tag == Strings.KNIFE)
 		{
-			gameObject.tag = Strings.HIT_KNIFE;
-			transform.parent = coll.gameObject.transform;
 			rb.velocity = Vector2.zero;
 			rb.freezeRotation = true;
 			rb.isKinematic = true;
+			gameObject.tag = Strings.HIT_KNIFE;
+			transform.parent = coll.gameObject.transform;
 
+			GameManager.instance.audioManager.PlayClip((int)Sounds.WoodCut);
 			GameManager.instance.woodLogController.gameObject.GetComponent<Animator>().Play("LogShake");
 
 			++GameManager.instance.playerController.knivesHit;
 			GameManager.instance.uimanager.UpdateScore(++GameManager.instance.score);
 			Debug.Log("Hit!!");
+
+			GameManager.instance.uimanager.UpdateKnives(GameManager.instance.playerController.knivesLimit - GameManager.instance.playerController.knivesHit);
 
 			if(GameManager.instance.playerController.knivesHit == GameManager.instance.playerController.knivesLimit)
 			{
@@ -46,14 +49,15 @@ public class KnifeController : MonoBehaviour {
 	{
 		if(coll.collider.tag == Strings.HIT_KNIFE)
 		{
+			GameManager.instance.EndGame();
 			GameManager.instance.woodLogController.gameObject.GetComponent<Animator>().Play("LogShake");
-			GetComponent<BoxCollider2D>().enabled = false;
+			GameManager.instance.audioManager.PlayClip((int)Sounds.KnifeClunk);
+
 			rb.velocity = new Vector2(rb.velocity.x, 0);
 			rb.AddForce(Vector2.down*magnitude);
 
 			Destroy(gameObject,1f);
 			Debug.Log("Game Over!!");
-			GameManager.instance.EndGame();
 		}
 	}
 }
