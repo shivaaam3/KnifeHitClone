@@ -5,6 +5,7 @@ using System;
 
 public class GameManager : MonoBehaviour {
 
+	#region variables
 	[SerializeField] private GameStates currentState;
 	[SerializeField] private int currentLevelNumber = 0;
 
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 	public static Action gameOver, levelCleared;
 	public int score = 0;
+	#endregion
+
 
 	#region Other scripts references
 	public UIManager uimanager;
@@ -27,6 +30,8 @@ public class GameManager : MonoBehaviour {
 		get {return currentState;}
 	}
 
+
+	#region Monobehaviour methods
 	void Awake()
 	{
 		if(instance == null)
@@ -43,16 +48,17 @@ public class GameManager : MonoBehaviour {
 		
 		currentState = GameStates.Over;
 	}
-	
+	#endregion
 
-	private void StartGame()
+
+	public void StartGame()
 	{
 		currentState = GameStates.Play;
 		currentLevelNumber = 0;
 		score = 0;
 
 		DestroyOldLevel();
-		currentLevel = Instantiate(Resources.Load(Strings.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
+		currentLevel = Instantiate(Resources.Load(Constants.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
 		woodLogController = GameObject.FindObjectOfType<WoodLogController>();
 		levelCleared();
 
@@ -61,16 +67,15 @@ public class GameManager : MonoBehaviour {
 		uimanager.UpdateKnives(playerController.knivesLimit);
 	}
 
-	internal void PauseGame()
+	public void PauseGame()
 	{
 		currentState = GameStates.Pause;
 	}
 
-	internal void EndGame()
+	public void EndGame()
 	{
 		currentState = GameStates.Over;
-
-		DestroyOldLevel();
+		currentLevel.SetActive(false);
 
 		if(score>=PrefsManager.HighScore)
 		{
@@ -87,7 +92,7 @@ public class GameManager : MonoBehaviour {
 		Debug.Log("Level Cleared");
 		PauseGame();
 		currentLevel.SetActive(false);
-		if(currentLevelNumber == Strings.LEVEL_NUMBER.Length-1)
+		if(currentLevelNumber == Constants.LEVEL_NUMBER.Length-1)
 		{
 			Debug.Log("Game Completed!!");
 			uimanager.levelText.text = "GAME COMPLETED!!";
@@ -96,12 +101,10 @@ public class GameManager : MonoBehaviour {
 		}
 		++currentLevelNumber;
 
-
 		if(currentLevelNumber % 5 == 4)
-			uimanager.levelText.text = Strings.BOSS_LEVEL;
+			uimanager.levelText.text = Constants.BOSS_LEVEL;
 		else
 			uimanager.levelText.text = "LEVEL " + (currentLevelNumber+1).ToString();
-
 		uimanager.levelText.gameObject.SetActive(true);
 
 		StartCoroutine(StartNewLevel());
@@ -111,18 +114,16 @@ public class GameManager : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(levelDelay);
 		DestroyOldLevel();
-		currentState = GameStates.Play;
-		currentLevel = Instantiate(Resources.Load(Strings.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
+
+		currentLevel = Instantiate(Resources.Load(Constants.LEVEL_NUMBER[currentLevelNumber], typeof(GameObject))) as GameObject;
 		woodLogController = GameObject.FindObjectOfType<WoodLogController>();
 		levelCleared();
+		currentState = GameStates.Play;
 	}
 
 	private void DestroyOldLevel()
 	{
 		if(currentLevel != null)
 			Destroy(currentLevel);
-
-		else
-			Debug.Log("null level!");
 	}
 }

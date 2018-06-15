@@ -25,7 +25,7 @@ public enum Sounds
 #endregion
 
 #region Constant strings
-class Strings
+class Constants
 {
 	#region Level names
 	public static string[] LEVEL_NUMBER = new string[] 

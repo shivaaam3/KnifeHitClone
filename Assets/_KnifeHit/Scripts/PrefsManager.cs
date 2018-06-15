@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PrefsManager {
-
+	#region Playerprefs
 	private const string HIGH_SCORE = "highscore";
 	private const string APPLES = "apples";
+	#endregion
+
 
 	#region Properties
-
 	public static int HighScore
 	{
 		set{PlayerPrefs.SetInt(HIGH_SCORE,value);}

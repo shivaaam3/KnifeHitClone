@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+	#region UI variables
 	[SerializeField] GameObject GameOverPanel;
 	[SerializeField] float delay;
 	public Text scoreText;
@@ -12,6 +13,8 @@ public class UIManager : MonoBehaviour {
 	public Text knivesText;
 	public Text levelText;
 	public Text gameOverScoreText;
+	#endregion
+
 
 	void OnEnable()
 	{

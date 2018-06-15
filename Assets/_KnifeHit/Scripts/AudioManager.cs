@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
-	[SerializeField] List<AudioClip> audioclips;
-	[SerializeField] AudioSource soundsAudioSource;
+	[SerializeField] private List<AudioClip> audioclips;
+	[SerializeField] private AudioSource soundsAudioSource;
 	// Use this for initialization
 	void Start () {
 		

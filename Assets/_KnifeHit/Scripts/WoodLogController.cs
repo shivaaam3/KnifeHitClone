@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WoodLogController : MonoBehaviour {
 
+	[Header("LEVEL ELEMENTS")]
 	[SerializeField] private MovementType currentMovmentType;
 	[SerializeField] private float maxSpeed = 0;
 	[SerializeField] private float speed = 0;
@@ -18,7 +19,6 @@ public class WoodLogController : MonoBehaviour {
 		
 	// Use this for initialization
 	void Start () {
-		GameManager.levelCleared();
 		StartMotion();
 	}
 	
