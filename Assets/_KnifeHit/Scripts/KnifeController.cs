@@ -6,7 +6,7 @@ public class KnifeController : MonoBehaviour {
 
 	[SerializeField] float magnitude;
 	private Rigidbody2D rb;
-	private bool hitKnifeBeforeLog = false;
+
 	// Use this for initialization
 	void Start () {
 
@@ -18,7 +18,7 @@ public class KnifeController : MonoBehaviour {
 	{
 		if(coll.tag == Constants.HIT_KNIFE)  //GAMEOVER CHECK
 		{
-			hitKnifeBeforeLog = true; 									//Sometimes it triggers with knife as well as log even after disabling the collider
+			gameObject.tag = Constants.HIT_KNIFE;
 			gameObject.GetComponent<BoxCollider2D>().enabled = false;
 			rb.velocity = new Vector2(Random.Range(-10,10),-rb.velocity.y);
 			GameManager.instance.EndGame();
@@ -30,7 +30,7 @@ public class KnifeController : MonoBehaviour {
 			Debug.Log("Game Over!!");
 		}
 
-		if(!hitKnifeBeforeLog && coll.tag == Constants.LOG && gameObject.tag == Constants.KNIFE)
+		if(gameObject.tag == Constants.KNIFE && coll.tag == Constants.LOG)
 		{
 			rb.velocity = Vector2.zero;
 			rb.freezeRotation = true;

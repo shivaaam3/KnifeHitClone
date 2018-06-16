@@ -34,13 +34,13 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(Input.GetMouseButtonDown(0))
 			{
-				if(Time.time>=reloadTime)
+				if(knivesThrown<knivesLimit && Time.time>=reloadTime)
 				{
 					Instantiate(knife,transform.position,knife.transform.rotation);
 					reloadTime = Time.time + reloadTimeInterval;
 					knivesThrown++;
 					Debug.Log(knivesThrown);
-					GameManager.instance.uimanager.UpdateKnives((knivesLimit - knivesThrown));
+					GameManager.instance.uimanager.UpdateKnives(Mathf.Clamp((knivesLimit - knivesThrown),0,knivesLimit));
 				}
 			}
 		}
